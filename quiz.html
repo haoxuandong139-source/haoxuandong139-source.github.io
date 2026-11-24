@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="game1.html">Click Game</a>
+    <a href="game2.html">Whack-a-Mole</a>
+    <a href="quiz.html">Quiz</a>
+</nav>
+<div class="container">
+    <h1>Game Quiz</h1>
+    <p>Test your knowledge about our games!</p>
+
+    <h3>1. What is the name of Game 1?</h3>
+    <input type="text" id="q1">
+
+    <h3>2. What is the name of Game 2?</h3>
+    <input type="text" id="q2">
+
+    <h3>3. How much time do players have in the click game?</h3>
+    <input type="radio" name="q3" value="10"> 10 seconds
+    <input type="radio" name="q3" value="20"> 20 seconds
+    <input type="radio" name="q3" value="30"> 30 seconds
+
+    <h3>4. What is the main goal of the click game?</h3>
+    <select id="q4">
+        <option value="">Choose an answer</option>
+        <option value="click">Click as many times as possible</option>
+        <option value="run">Run as fast as possible</option>
+        <option value="jump">Jump over obstacles</option>
+    </select>
+
+    <h3>5. How long does Whack-a-Mole last?</h3>
+    <input type="radio" name="q5" value="10"> 10 seconds
+    <input type="radio" name="q5" value="20"> 20 seconds
+    <input type="radio" name="q5" value="30"> 30 seconds
+
+    <h3>6. What is the goal of Whack-a-Mole?</h3>
+    <input type="radio" name="q6" value="mole"> Hit the mole
+    <input type="radio" name="q6" value="button"> Click buttons
+    <input type="radio" name="q6" value="run"> Run around
+
+    <h3>7. Which actions are in our games? (Select all that apply)</h3>
+    <input type="checkbox" name="q7" value="click"> Clicking buttons
+    <input type="checkbox" name="q7" value="mole"> Hitting a mole
+    <input type="checkbox" name="q7" value="jump"> Jumping
+    <input type="checkbox" name="q7" value="swim"> Swimming
+
+    <h3>8. How many games are on our website?</h3>
+    <input type="number" id="q8">
+
+    <br><br>
+    <button onclick="checkquiz()">Submit Quiz</button>
+    <h2 id="result"></h2>
+</div>
+<script>
+function checkquiz() {
+    let score = 0;
+    let a1 = document.getElementById("q1").value.trim().toLowerCase();
+    if (a1 === "click game") score += 2;
+
+    let a2 = document.getElementById("q2").value.trim().toLowerCase();
+    if (a2 === "whack-a-mole") score += 2;
+
+    let a3 = document.querySelector('input[name="q3"]:checked');
+    if (a3 && a3.value === "10") score += 1;
+
+    let a4 = document.getElementById("q4").value;
+    if (a4 === "click") score += 1;
+
+    let a5 = document.querySelector('input[name="q5"]:checked');
+    if (a5 && a5.value === "30") score += 1;
+
+    let a6 = document.querySelector('input[name="q6"]:checked');
+    if (a6 && a6.value === "mole") score += 1;
+
+    let boxes = document.querySelectorAll('input[name="q7"]:checked');
+    if (boxes.length === 2) score += 2;
+
+    let a8 = document.getElementById("q8").value.trim();
+    if (a8 === "2") score += 1;
+
+    document.getElementById("result").innerText = "Your Score: " + score + " / 11";
+}
+</script>
+</body>
+</html>
