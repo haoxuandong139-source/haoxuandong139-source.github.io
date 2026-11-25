@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Whack-a-Mole</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="game1.html">Click Game</a>
+    <a href="game2.html">Whack-a-Mole</a>
+    <a href="quiz.html">Quiz</a>
+</nav>
+<div id="gamearea">
+    <img id="mole" src='images/Gopher.png' alt="mole">
+</div>
+<div class="gamecontrols">
+    <button id="easyMode">Easy</button>
+    <button id="hardMode">Hard</button>
+    <p id="modeText">Mode: Easy</p>
+    <button id="startmole">Start</button>
+    <button id="resetmole">Reset</button>
+    <p>Score: <span id="molescore">0</span></p>
+    <p>Time: <span id="moletime">30</span></p>
+</div>
+<script>
+let mscore = 0;
+let mtime = 30;
+let timer = null;
+let moletimer = null;
+let hideTimer = null;
+let mrunning = false;
+let moleDuration = 650;
+let mole = document.getElementById("mole");
+
+document.getElementById("easyMode").onclick = function () {
+    if (mrunning) return;
+    moleDuration = 650;
+    document.getElementById("modeText").textContent = "Mode: Easy";
+};
+
+document.getElementById("hardMode").onclick = function () {
+    if (mrunning) return;
+    moleDuration = 400;
+    document.getElementById("modeText").textContent = "Mode: Hard";
+};
+
+function showMole() {
+    let x = Math.floor(Math.random() * 520);
+    let y = Math.floor(Math.random() * 320);
+    mole.style.left = x + "px";
+    mole.style.top = y + "px";
+    mole.style.display = "block";
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+        mole.style.display = "none";
+    }, moleDuration);
+}
+
+document.getElementById("startmole").onclick = function () {
+    if (mrunning) return;
+    mrunning = true;
+    mscore = 0;
+    mtime = 30;
+    document.getElementById("molescore").textContent = mscore;
+    document.getElementById("moletime").textContent = mtime;
+    showMole();
+
+    timer = setInterval(() => {
+        mtime--;
+        document.getElementById("moletime").textContent = mtime;
+        if (mtime <= 0) {
+            clearInterval(timer);
+            clearInterval(moletimer);
+            clearTimeout(hideTimer);
+            mrunning = false;
+            mole.style.display = "none";
+        }
+    }, 1000);
+
+    moletimer = setInterval(showMole, 1000);
+};
+
+mole.onclick = function () {
+    if (mrunning) {
+        mscore++;
+        document.getElementById("molescore").textContent = mscore;
+    }
+};
+
+document.getElementById("resetmole").onclick = function () {
+    clearInterval(timer);
+    clearInterval(moletimer);
+    clearTimeout(hideTimer);
+    mrunning = false;
+    mscore = 0;
+    mtime = 30;
+    document.getElementById("molescore").textContent = mscore;
+    document.getElementById("moletime").textContent = mtime;
+    mole.style.display = "none";
+};
+</script>
+</body>
+</html>
